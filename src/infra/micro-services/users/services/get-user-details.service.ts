@@ -22,11 +22,13 @@ export class GetUserDetails {
     try {
       const { sub: userId } = this.context.req.user.payload;
 
-      let userData = await this.cacheManager.get<UserDetailResponse>(userId);
+      let userData = await this.cacheManager.get<UserDetailResponse>(
+        `user_${userId}`,
+      );
 
       if (!userData) {
         userData = await this.usersRepository.getUserDetails();
-        this.cacheManager.set(userId, userData);
+        this.cacheManager.set(`user_${userId}`, userData);
       }
 
       return new User({

@@ -8,6 +8,7 @@ import { AuthorizationModule } from './authorization.module';
 import { UsersModule } from '../micro-services/users/users.module';
 import { GetUserCollectionService } from '~/app/graphql/services/get-user-collection.service';
 import { CacheModule } from './cache.module';
+import { CardsModule } from '../micro-services/cards/cards.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CacheModule } from './cache.module';
     AuthorizationModule,
     UsersModule,
     CacheModule,
+    CardsModule,
   ],
   providers: [UserResolver, GetUserCollectionService],
 })
