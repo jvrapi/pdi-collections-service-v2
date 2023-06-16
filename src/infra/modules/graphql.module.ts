@@ -5,7 +5,9 @@ import { DatabaseModule } from './database.module';
 import { join } from 'node:path';
 import { UserResolver } from '~/app/graphql/resolvers/user.resolver';
 import { AuthorizationModule } from './authorization.module';
-import { UsersModule } from '../microservices/users/users.module';
+import { UsersModule } from '../micro-services/users/users.module';
+import { GetUserCollectionService } from '~/app/graphql/services/get-user-collection.service';
+import { CacheModule } from './cache.module';
 
 @Module({
   imports: [
@@ -16,7 +18,8 @@ import { UsersModule } from '../microservices/users/users.module';
     DatabaseModule,
     AuthorizationModule,
     UsersModule,
+    CacheModule,
   ],
-  providers: [UserResolver],
+  providers: [UserResolver, GetUserCollectionService],
 })
 export class GraphQLModule {}

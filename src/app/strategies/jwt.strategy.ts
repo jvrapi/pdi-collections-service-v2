@@ -12,7 +12,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       algorithms: ['RS256'],
     });
   }
+
   validate(payload: any) {
-    return { id: payload.sub };
+    return { payload };
   }
 }
