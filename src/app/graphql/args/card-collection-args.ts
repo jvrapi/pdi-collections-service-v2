@@ -1,12 +1,12 @@
-import { Field, ArgsType } from '@nestjs/graphql';
+import { Field, ArgsType, Int } from '@nestjs/graphql';
 import { Max } from 'class-validator';
 
 @ArgsType()
-export class UserCollectionArgs {
-  @Field()
+export class CardCollectionFilter {
+  @Field(() => Int)
   @Max(30, { message: 'O máximo de cartas para serem listadas é de 30' })
   take: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   skip?: number;
 }

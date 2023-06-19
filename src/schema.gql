@@ -7,7 +7,13 @@ type User {
   name: String!
   username: String!
   email: String!
-  cards(take: Float!, skip: Float): [CardCollection!]!
+  collection: Collection!
+}
+
+type Collection {
+  id: String!
+  isShared: Boolean!
+  cards(take: Int!, skip: Int): [CardCollection!]!
 }
 
 type CardCollection {

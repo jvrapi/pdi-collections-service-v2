@@ -1,7 +1,7 @@
 import { Collection } from '~/app/entities/collection';
 import {
   CollectionsRepository,
-  GetUserByIdProps,
+  GetCollectionCards,
   SaveCard,
 } from '../../repositories/collections-repository';
 import { PrismaService } from '../services/prisma.service';
@@ -35,17 +35,10 @@ export class PrismaCollectionsRepository implements CollectionsRepository {
     return PrismaCardsMapper.toDomain(card);
   }
 
-  async getByUserId(props: GetUserByIdProps): Promise<Collection | null> {
-    const { take, userId, skip } = props;
+  async getByUserId(userId: string): Promise<Collection | null> {
     const collection = await this.prismaClient.collection.findFirst({
       where: {
         userId,
-      },
-      include: {
-        cards: {
-          take,
-          skip,
-        },
       },
     });
 
@@ -54,5 +47,19 @@ export class PrismaCollectionsRepository implements CollectionsRepository {
     }
 
     return PrismaCollectionsMapper.toDomain(collection);
+  }
+
+  async getCards(filters: GetCollectionCards): Promise<Card[]> {
+    const { collectionId, skip, take } = filters;
+
+    const cards = await this.prismaClient.card.findMany({
+      where: {
+        collectionId,
+      },
+      skip,
+      take,
+    });
+
+    return cards.map(PrismaCardsMapper.toDomain);
   }
 }

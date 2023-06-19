@@ -20,9 +20,9 @@ export class AddCardsToCollectionService {
     try {
       const { userId, cards } = data;
 
-      const userCollection = await this.collectionsRepository.getByUserId({
+      const userCollection = await this.collectionsRepository.getByUserId(
         userId,
-      });
+      );
 
       if (!userCollection) {
         throw new Error('Collection not found');

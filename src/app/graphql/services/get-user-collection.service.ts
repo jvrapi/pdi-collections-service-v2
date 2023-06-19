@@ -1,23 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CollectionsRepository } from '~/infra/database/repositories/collections-repository';
 
-interface Args {
-  userId: string;
-  take: number;
-  skip?: number;
-}
-
 @Injectable()
 export class GetUserCollectionService {
   private logger = new Logger(GetUserCollectionService.name);
   constructor(private collectionsRepository: CollectionsRepository) {}
-  async execute({ take, userId, skip }: Args) {
+  async execute(userId: string) {
     try {
-      const collection = await this.collectionsRepository.getByUserId({
-        take,
-        userId,
-        skip,
-      });
+      const collection = await this.collectionsRepository.getByUserId(userId);
       return collection;
     } catch (error) {
       this.logger.error(error);

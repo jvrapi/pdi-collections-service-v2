@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, ResolveField, Resolver, Root } from '@nestjs/graphql';
 import { CardCollection } from '../entities/card-collection';
 import { AddCardsArgs } from '../args/add-cards-args';
 import { UseGuards } from '@nestjs/common';
@@ -6,12 +6,17 @@ import { JwtAuthGuard } from '~/app/guards/jwt-auth.guard';
 import { UserId } from '../decorators/user-id.decorator';
 import { GetCardsByIdsService } from '~/infra/micro-services/cards/services/get-cards-by-ids.service';
 import { AddCardsToCollectionService } from '../services/add-cards-to-collection.service';
+import { Collection as CollectionEntity } from '~/app/entities/collection';
+import { Collection } from '../entities/collection';
+import { CardCollectionFilter } from '../args/card-collection-args';
+import { GetCardsCollectionService } from '../services/get-cards-collection.service';
 
-@Resolver()
+@Resolver(() => Collection)
 export class CollectionResolver {
   constructor(
     private getCardsByIdsService: GetCardsByIdsService,
     private addCardsToCollectionService: AddCardsToCollectionService,
+    private getCardsCollectionService: GetCardsCollectionService,
   ) {}
 
   @UseGuards(JwtAuthGuard)
@@ -41,5 +46,20 @@ export class CollectionResolver {
         imageUri,
       };
     });
+  }
+
+  @ResolveField(() => [CardCollection])
+  async cards(
+    @Root() collection: CollectionEntity,
+    @Args() args: CardCollectionFilter,
+  ) {
+    const { take, skip } = args;
+    const { id: collectionId } = collection;
+    const cardsCollection = await this.getCardsCollectionService.execute(
+      collectionId,
+      { take, skip },
+    );
+    const cardsIds = cardsCollection.map((card) => card.id);
+    return await this.getCardsByIdsService.execute(cardsIds);
   }
 }
