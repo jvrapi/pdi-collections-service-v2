@@ -19,6 +19,7 @@ export class GetCardsByIdsService {
     try {
       const idsToGetDetails: string[] = [];
       const cards: Card[] = [];
+
       await Promise.all(
         ids.map(async (id) => {
           const card = await this.cacheManager.get<CardResponse>(`card_${id}`);
@@ -30,6 +31,7 @@ export class GetCardsByIdsService {
           }
         }),
       );
+
       if (idsToGetDetails.length) {
         const response = await this.cardsRepository.getCards({
           ids: idsToGetDetails,
@@ -43,7 +45,7 @@ export class GetCardsByIdsService {
       }
       return cards;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(GetCardsByIdsService.name, error);
       throw new Error('Erro ao tentar consultar o micro serviço de cartas');
     }
   }

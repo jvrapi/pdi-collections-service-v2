@@ -1,7 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
-export class BaseCardModel {
+export class Set {
   @Field()
   id: string;
 
@@ -9,5 +9,11 @@ export class BaseCardModel {
   name: string;
 
   @Field()
-  imageUri: string;
+  code: string;
+
+  @Field()
+  releasedAt: string;
+
+  @Field()
+  iconUri: string;
 }

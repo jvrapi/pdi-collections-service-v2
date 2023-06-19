@@ -1,8 +1,8 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { BaseCardModel } from './card-base-model';
+import { BaseCard } from './card-base';
 
 @ObjectType()
-export class UserCardModel extends BaseCardModel {
+export class CardCollection extends BaseCard {
   @Field(() => Date)
   addedAt: Date;
 

@@ -1,5 +1,5 @@
 import { ObjectType } from '@nestjs/graphql';
-import { BaseCardModel } from './card-base-model';
+import { BaseCard } from './card-base';
 
 @ObjectType()
-export class Card extends BaseCardModel {}
+export class Card extends BaseCard {}

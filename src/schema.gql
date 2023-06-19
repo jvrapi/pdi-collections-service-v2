@@ -7,10 +7,10 @@ type User {
   name: String!
   username: String!
   email: String!
-  cards(take: Float!, skip: Float): [UserCardModel!]!
+  cards(take: Float!, skip: Float): [CardCollection!]!
 }
 
-type UserCardModel {
+type CardCollection {
   id: String!
   name: String!
   imageUri: String!
@@ -26,4 +26,13 @@ scalar DateTime
 
 type Query {
   user: User!
+}
+
+type Mutation {
+  addCard(input: [AddCardInput!]!): [CardCollection!]!
+}
+
+input AddCardInput {
+  quantity: Int!
+  cardId: String!
 }

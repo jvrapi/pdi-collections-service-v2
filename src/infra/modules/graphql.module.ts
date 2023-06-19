@@ -9,6 +9,8 @@ import { UsersModule } from '../micro-services/users/users.module';
 import { GetUserCollectionService } from '~/app/graphql/services/get-user-collection.service';
 import { CacheModule } from './cache.module';
 import { CardsModule } from '../micro-services/cards/cards.module';
+import { CollectionResolver } from '~/app/graphql/resolvers/collection.resolver';
+import { AddCardsToCollectionService } from '~/app/graphql/services/add-cards-to-collection.service';
 
 @Module({
   imports: [
@@ -22,6 +24,11 @@ import { CardsModule } from '../micro-services/cards/cards.module';
     CacheModule,
     CardsModule,
   ],
-  providers: [UserResolver, GetUserCollectionService],
+  providers: [
+    UserResolver,
+    CollectionResolver,
+    GetUserCollectionService,
+    AddCardsToCollectionService,
+  ],
 })
 export class GraphQLModule {}

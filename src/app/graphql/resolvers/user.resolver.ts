@@ -1,10 +1,10 @@
 import { Args, Query, ResolveField, Resolver, Root } from '@nestjs/graphql';
-import { User as UserModel } from '../entities/user-model';
+import { User as UserModel } from '../entities/user';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '~/app/guards/jwt-auth.guard';
 import { GetUserDetails } from '~/infra/micro-services/users/services/get-user-details.service';
 import { UserCollectionArgs } from '../args/user-collection-args';
-import { UserCardModel } from '../entities/user-card-model';
+import { CardCollection } from '../entities/card-collection';
 import { GetUserCollectionService } from '../services/get-user-collection.service';
 import { User } from '~/infra/micro-services/users/entities/user';
 import { GetCardsByIdsService } from '~/infra/micro-services/cards/services/get-cards-by-ids.service';
@@ -24,7 +24,7 @@ export class UserResolver {
     return user;
   }
 
-  @ResolveField(() => [UserCardModel])
+  @ResolveField(() => [CardCollection])
   async cards(@Root() user: User, @Args() args: UserCollectionArgs) {
     const { take, skip } = args;
     const { id: userId } = user;
