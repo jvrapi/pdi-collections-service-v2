@@ -1,0 +1,17 @@
+coverage/*
+setup/*
+node_modules/*
+.husky
+.gitignore
+.env
+.env.example
+.env.testing
+.env.testing.example
+.env.production.example
+.eslintignore
+.eslint
+commitlint.config.js
+jest-e2e.config.ts
+jest-unit.config.ts
+jest.config.ts
+README.md
