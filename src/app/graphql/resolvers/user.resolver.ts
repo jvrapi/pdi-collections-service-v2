@@ -28,8 +28,6 @@ export class UserResolver {
   async collection(@Root() user: User) {
     const { id: userId } = user;
     const collection = await this.getUserCollection.execute(userId);
-    // const cardsIds = collection.cards.map((card) => card.id);
-    // return await this.getCardsByIds.execute(cardsIds);
     return collection;
   }
 }
