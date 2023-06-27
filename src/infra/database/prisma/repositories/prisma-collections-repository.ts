@@ -14,6 +14,14 @@ import { Card } from '~/app/entities/card';
 export class PrismaCollectionsRepository implements CollectionsRepository {
   constructor(private prismaClient: PrismaService) {}
 
+  async create(userId: string): Promise<void> {
+    await this.prismaClient.collection.create({
+      data: {
+        userId,
+      },
+    });
+  }
+
   async saveCards(data: SaveCard): Promise<Card> {
     const { cardId, collectionId, quantity } = data;
     const card = await this.prismaClient.card.upsert({

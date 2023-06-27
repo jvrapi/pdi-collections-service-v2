@@ -17,4 +17,5 @@ export abstract class CollectionsRepository {
   abstract getByUserId(userId: string): Promise<Collection | null>;
   abstract getCards(filters: GetCollectionCards): Promise<Card[]>;
   abstract saveCards(data: SaveCard): Promise<Card>;
+  abstract create(userId: string): Promise<void>;
 }
