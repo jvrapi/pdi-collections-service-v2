@@ -11,7 +11,7 @@ const newrelic = require('newrelic');
 @Injectable()
 export class NewrelicInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    return newrelic.startWebTransaction(
+    return newrelic.setTransactionName(
       context.getArgs().pop().operation.name.value,
       function () {
         const transaction = newrelic.getTransaction();
