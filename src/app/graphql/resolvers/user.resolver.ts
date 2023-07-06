@@ -1,12 +1,10 @@
-import { Args, Query, ResolveField, Resolver, Root } from '@nestjs/graphql';
+import { Query, ResolveField, Resolver, Root } from '@nestjs/graphql';
 import { User as UserModel } from '../entities/user';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '~/app/guards/jwt-auth.guard';
 import { GetUserDetails } from '~/infra/micro-services/users/services/get-user-details.service';
-import { CardCollection } from '../entities/card-collection';
 import { GetUserCollectionService } from '../services/get-user-collection.service';
 import { User } from '~/infra/micro-services/users/entities/user';
-import { GetCardsByIdsService } from '~/infra/micro-services/cards/services/get-cards-by-ids.service';
 import { Collection } from '../entities/collection';
 
 @Resolver(() => UserModel)
@@ -14,7 +12,6 @@ export class UserResolver {
   constructor(
     private getUserDetails: GetUserDetails,
     private getUserCollection: GetUserCollectionService,
-    private getCardsByIds: GetCardsByIdsService,
   ) {}
 
   @UseGuards(JwtAuthGuard)
