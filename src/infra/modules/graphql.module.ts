@@ -12,12 +12,17 @@ import { CardsModule } from '../micro-services/cards/cards.module';
 import { CollectionResolver } from '~/app/graphql/resolvers/collection.resolver';
 import { AddCardsToCollectionService } from '~/app/graphql/services/add-cards-to-collection.service';
 import { GetCardsCollectionService } from '~/app/graphql/services/get-cards-collection.service';
+import createNewRelicPlugin from '@newrelic/apollo-server-plugin';
+import { ApolloServerPlugin } from '@apollo/server';
+
+const newRelicPlugin = createNewRelicPlugin<ApolloServerPlugin>({});
 
 @Module({
   imports: [
     GraphQLModuleNestJS.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      plugins: [newRelicPlugin],
     }),
     DatabaseModule,
     AuthorizationModule,

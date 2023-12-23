@@ -13,10 +13,6 @@ RUN npx prisma generate
 
 RUN yarn build
 
-RUN mv .env.production .env
-
-RUN rm -rf node_modules
-
 RUN yarn --production
 
 # step 2 - Run build app
@@ -27,7 +23,6 @@ LABEL stage="run app"
 WORKDIR /app
 
 COPY --from=builder /app/dist  /app/dist
-COPY --from=builder /app/.env  /app/
 COPY --from=builder /app/node_modules  /app/node_modules
 
 

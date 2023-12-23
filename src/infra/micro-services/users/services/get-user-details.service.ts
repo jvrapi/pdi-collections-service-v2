@@ -14,7 +14,8 @@ export class GetUserDetails {
   constructor(
     @Inject(CACHE_MANAGER)
     private cacheManager: Cache,
-    @Inject(CONTEXT) private context: Context,
+    @Inject(CONTEXT)
+    private context: Context,
     private usersRepository: UsersRepository,
   ) {}
 
